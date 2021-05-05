@@ -70,6 +70,9 @@ exec into specific container within a pod
 rerun cronjob
 - `kubectl create job --from=cronjob/${cron_job} ${new_cron_name}`
 
+check RBAC permissions
+- `kubectl auth can-i create pod --namespace ${NAMESPACE} --as ${SERVICE_ACCOUNT}`
+
 -------------------------
 
 ### Helm
