@@ -8,6 +8,9 @@ wipe all git history
 pop most recent commit
 - `git reset --soft HEAD^`
 
+stash all staged files
+- `git stash push -m "CHANGES" -- $(git diff --staged --name-only)`
+
 -------------------------
 
 ### OpenSSL
@@ -37,6 +40,9 @@ create a disk from a snapshot
 
 get instances in a network
 - `gcloud compute instances list --filter 'networkInterfaces.network=https://www.googleapis.com/compute/v1/projects/${PROJECT}/global/networks/${NETWORK}'`
+
+enable firewall logging
+- `gcloud compute firewall-rules update ${FIREWALL_RULE} --enable-logging`
 
 -------------------------
 
