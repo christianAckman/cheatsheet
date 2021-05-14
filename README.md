@@ -63,21 +63,52 @@ setup kubectl context (EKS)
 update a deployment's image, keeping history
 - `kubectl set image deployment/${deployment} master ${image} -n ${namespace} --record`
 
-watch deployment status
+watch deployment/daemonset status
 - `kubectl rollout status deployment/${deploy} -n ${namespace}`
+- `kubectl rollout status daemonset/${daemonset} -n ${namespace}`
 
 restart all pods in a deployment/daemonset
 - `kubectl rollout restart daemonset/${daemonset} -n ${namespace}`
 
+kill all pending pods
+- `kubectl | grep -v Running | awk '{print $1}' | xargs kubectl delete po --grace-period=0`
+
+scale a deployment
+- `kubectl scale deployment/myapp --replicas=2`
+
+restart all pods in a namespace
+- `kubectl delete pod --all -n ${NAMESPACE}`
+
 exec into specific container within a pod
 - `kubectl exec -it ${pod} -c ${container} /bin/bash` - ubuntu
 - `kubectl exec -it ${pod} -c ${container} /bin/ash` - alpine
+
+forward localhost:8080 to svc/deploy
+- `kubectl port-forward svc/my-service 8080:3000`
+- `kubectl port-forward deploy/my-deployment 8080:3000`
 
 rerun cronjob
 - `kubectl create job --from=cronjob/${cron_job} ${new_cron_name}`
 
 check RBAC permissions
 - `kubectl auth can-i create pod --namespace ${NAMESPACE} --as ${SERVICE_ACCOUNT}`
+
+run a pod and target a node
+- `kubectl run nginx --image nginx:latest --overrides='{"apiVersion": "v1", "spec": {"nodeSelector": { "cloud.google.com/gke-nodepool": "pool-1" }}}'`
+
+set node as unschedulable
+- `kubectl cordon ${NODE}`
+- `kubectl taint nodes ${NODE} key1=value1:NoSchedule`
+
+set node as schedulable
+- `kubectl cordon ${NODE}`
+- `kubectl taint nodes ${NODE} key1=value1:NoSchedule-`
+
+evict all pods from a node
+- `kubectl drain --force --ignore-daemonsets=true`
+
+set storage class as expandable
+- `kubectl patch storageclass gp2 -p '{"allowVolumeExpansion": true}'`
 
 -------------------------
 
