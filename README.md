@@ -44,6 +44,17 @@ get instances in a network
 enable firewall logging
 - `gcloud compute firewall-rules update ${FIREWALL_RULE} --enable-logging`
 
+get roles attached to service account 
+- `gcloud projects get-iam-policy ${GCP_PROJECT} --flatten="bindings[].members" --format='table(bindings.role)' --filter="bindings.members:${SERVICE_ACCOUNT}"`
+
+- enable deleted KMS key
+```
+gcloud kms keyrings list --location ${REGION}
+gcloud kms keys versions list --key ${KEY} --location ${REGION} --keyring ${KEY_RING}
+gcloud kms keys versions restore 1 --key ${KEY} --location ${REGION} --keyring ${KEY_RING}
+gcloud kms keys versions enable 1 --key ${KEY} --location ${REGION} --keyring ${KEY_RING}
+```
+
 -------------------------
 
 ### AWS
