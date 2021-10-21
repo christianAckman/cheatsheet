@@ -11,6 +11,13 @@ pop most recent commit
 stash all staged files
 - `git stash push -m "CHANGES" -- $(git diff --staged --name-only)`
 
+checkout someone's fork
+```
+git remote add theirusername git@github.com:theirusername/reponame.git
+git fetch theirusername
+git checkout -b mynamefortheirbranch theirusername/theirbranch
+```
+
 -------------------------
 
 ### OpenSSL
