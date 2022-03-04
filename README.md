@@ -8,6 +8,12 @@ wipe all git history
 pop most recent commit
 - `git reset --soft HEAD^`
 
+pop multiple commits (good for squashing many)
+- `git reset --soft HEAD~9`
+
+edit commits
+- `git rebase -i HEAD~2`
+
 stash all staged files
 - `git stash push -m "CHANGES" -- $(git diff --staged --name-only)`
 
