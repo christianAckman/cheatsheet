@@ -161,7 +161,11 @@ evict all pods from a node
 set storage class as expandable
 - `kubectl patch storageclass gp2 -p '{"allowVolumeExpansion": true}'`
 
--------------------------
+scale daemonset to zero (filter on non-existent label)
+- `kubectl patch daemonset ${DAEMONSET} -p '{"spec": {"template": {"spec": {"nodeSelector": {"non-existing": "true"}}}}}'`
+
+remove filter
+- `kubectl patch daemonset ${DAEMONSET} -n monitoring --type json -p='[{"op": "remove", "path": "/spec/template/spec/nodeSelector/non-existing"}]'`
 
 ### Helm
 
